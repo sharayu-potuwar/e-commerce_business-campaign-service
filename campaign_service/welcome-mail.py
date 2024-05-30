@@ -1,24 +1,17 @@
 import json
+
 import boto3
 
 class SendEmail():
 
     def __init__(self):
-        self.ses_client = boto3.client("ses", region_name="us-west-2")
-    
-    # # Iterating over dictionary
-    # def convert_to_object(registrationObj):
-        
-    #     for key in registrationObj:
-    #         print(key," : ",registrationObj[key])
-    
+        self.ses_client = boto3.client("ses", region_name="us-east-1")
+   
     def verify_email_identity(self, registrationObj):
+      
+        self.ses_client.verify_email_identity(EmailAddress=registrationObj['email_id'])
+       
         
-        response = self.ses_client.verify_email_identity(
-        EmailAddress=registrationObj['email_id']
-        )
-        print(response)
-
     def send_html_email(self, registrationObj):
        
         CHARSET = "UTF-8"
@@ -51,7 +44,7 @@ class SendEmail():
                     "Data": "Conratulations ! E-commerce welcome's you ..hehe",
                 },
             },
-            Source={"sharayu@ecom.com"}
+            Source="sharayu.potuwar@gmail.com"
     )
         print(response)
 
