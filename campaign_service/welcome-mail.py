@@ -6,12 +6,7 @@ class SendEmail():
 
     def __init__(self):
         self.ses_client = boto3.client("ses", region_name="us-east-1")
-   
-    def verify_email_identity(self, registrationObj):
-      
-        self.ses_client.verify_email_identity(EmailAddress=registrationObj['email_id'])
-       
-        
+
     def send_html_email(self, registrationObj):
        
         CHARSET = "UTF-8"
@@ -48,8 +43,6 @@ class SendEmail():
     )
         print(response)
 
-# Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-# SPDX-License-Identifier: Apache-2.0
 def lambda_handler(event, context):
     sendemail = SendEmail()
     for record in event['Records']:
@@ -57,9 +50,9 @@ def lambda_handler(event, context):
             message = record['Sns']['Message']
             registrationObj = json.loads(message) 
             print(registrationObj)
-            sendemail.verify_email_identity(registrationObj)
+
             sendemail.send_html_email(registrationObj)
-            # TODO; Process your record here
+
         
        except Exception as e:
             print("An error occurred")
