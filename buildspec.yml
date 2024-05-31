@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - pip3 install -q awscli --upgrade --user
+      - yum -q install -y jq
+  build:
+    commands:
+      - zip campaign_service.zip ./campaign_service
+  post_build:
+    commands:
+      - aws s3 cp campaign_service.zip  https://ecom-email-sourcecode-bucket.s3.amazonaws.com/campaign_service.zip
+     
+      
