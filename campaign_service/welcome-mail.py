@@ -7,6 +7,11 @@ class SendEmail():
     def __init__(self):
         self.ses_client = boto3.client("ses", region_name="us-east-1")
 
+    def verify_email(self, registrationObj):
+    
+        self.ses_client.verify_email_identity(EmailAddress=registrationObj['email_id'])
+        print("Started verification of %s.", registrationObj['email_id'])
+
     def send_html_email(self, registrationObj):
        
         CHARSET = "UTF-8"
@@ -50,7 +55,7 @@ def lambda_handler(event, context):
             message = record['Sns']['Message']
             registrationObj = json.loads(message) 
             print(registrationObj)
-
+            # sendemail.verify_email(registrationObj)
             sendemail.send_html_email(registrationObj)
 
         
