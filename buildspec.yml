@@ -2,8 +2,6 @@ version: 0.2
 
 env:
   shell: bash
-  variables:
-    lambda_function_name : $env-e-commerce_business-campaign-service
 
 phases:
   install:
@@ -15,9 +13,5 @@ phases:
       - zip campaign_service.zip ./campaign_service/__init__.py ./campaign_service/welcome-mail.py
   post_build:
     commands:
-      - echo $lambda_function_name
-      - echo $env
       - aws s3 cp campaign_service.zip  s3://ecom-email-sourcecode-bucket/campaign_service.zip
       - aws lambda update-function-code --function-name ${env}-e-commerce_business-campaign-service --s3-bucket ecom-email-sourcecode-bucket --s3-key campaign_service.zip
-     
-      
