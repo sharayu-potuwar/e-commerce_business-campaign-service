@@ -15,5 +15,3 @@ phases:
     commands:
       - aws s3 cp campaign_service.zip  s3://ecom-email-sourcecode-bucket/campaign_service.zip
       - aws lambda update-function-code --function-name ${env}-e-commerce_business-campaign-service --s3-bucket ecom-email-sourcecode-bucket --s3-key campaign_service.zip
-     h
-      
